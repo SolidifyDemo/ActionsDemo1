@@ -22,7 +22,7 @@ jobs:
         uses: Azure/cli@1.0.4
         with:
           # Specify the script here
-          inlineScript: az group create --name actions-demo-rg --location "westeurope" && az group deployment create --resource-group actions-demo-rg --template-uri https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-app-service-docs-linux/azuredeploy.json
+          inlineScript: az group create --name actions-demo-rg --location "easteurope" && az group deployment create --resource-group actions-demo-rg --template-uri https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-app-service-docs-linux/azuredeploy.json
   
   build-deploy:
     name: Build and Deploy
