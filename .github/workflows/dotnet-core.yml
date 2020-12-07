@@ -1,4 +1,4 @@
-name: .NET Core
+name: Build CI
 
 on:
   push:
@@ -21,3 +21,6 @@ jobs:
       run: dotnet restore
     - name: Build
       run: dotnet build --configuration Release --no-restore
+    - name: dotnet publish
+      run: |
+        dotnet publish -c Release -o dotnetcorewebapp 
