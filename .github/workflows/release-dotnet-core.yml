@@ -1,4 +1,4 @@
-name: Build CI
+name: Release WebApp
 
 on:
   push:
@@ -7,8 +7,24 @@ on:
     branches: [ main ]
 
 jobs:
+  deploy-azure-webapp-template:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout source code
+        uses: actions/@checkout@v2
+        
+      - name: Login to Azure
+        uses: azure/login@v1.1
+        with:
+          creds: ${{secrets.AZURE_CREDENTIALS}}  
+      - name: Deploy Arm Template
+        uses: Azure/cli@1.0.4
+        with:
+          # Specify the script here
+          inlineScript: az group create --name actions-demo-rg --location "westeurope" && az deployment group create --resource-group actions-demo-rg --parameters webAppName="core-app-demo" linuxFxVersion="DOTNETCORE|3.0" --template-uri "https://raw.githubusercontent.com/Azure/azure-quickstart-templates/master/101-app-service-docs-linux/azuredeploy.json"
+  
   build:
-
+    needs: [deploy-azure-webapp-template]
     runs-on: ubuntu-latest
 
     steps:
